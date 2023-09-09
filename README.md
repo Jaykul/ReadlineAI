@@ -5,8 +5,9 @@ commands into commands in PowerShell, Z shell and Bash.
 
 ![Codex Cli GIF](codex_cli.gif)
 
-
-The Command Line Interface (CLI) was the first major User Interface we used to interact with machines. It's incredibly powerful, you can do almost anything with a CLI, but it requires the user to express their intent extremely precisely. The user needs to _know the language of the computer_. 
+The Command Line Interface (CLI) was the first major User Interface we used to interact with machines.
+It's incredibly powerful, you can do almost anything with a CLI, but it requires the user to express their intent extremely precisely.
+The user needs to _know the language of the computer_.
 
 With the advent of Large Language Models (LLMs), particularly those that have been trained on code, it's possible to
 interact with a CLI using Natural Language (NL). In effect, these models understand natural language _and_ code well
@@ -14,9 +15,9 @@ enough that they can translate from one to another.
 
 This project aims to offer a cross-shell NL->Code experience to allow users to interact with their favorite CLI using
 NL. The user enters a command, like "what's my IP address", hits `Ctrl + G` and gets a suggestion for a command
-idiomatic to the shell they're using. The project uses the GPT-3 Codex model off-the-shelf, meaning the model has not
-been explicitly trained for the task. Instead, we rely on a discipline called prompt engineering (
-see [section](#prompt-engineering-and-context-files) below) to coax the right commands from Codex.
+idiomatic to the shell they're using. The project uses the GPT-3.5-Turbo model off-the-shelf, meaning the model has not
+been explicitly trained for this task. Instead, we rely on prompt engineering (
+see [section](#prompt-engineering-and-context-files) below) to coax the right commands from chat models.
 
 **Note: The model can still make mistakes! Don't run a command if you don't understand it. If you're not sure what a
 command does, hit `Ctrl + C` to cancel it**.
@@ -28,15 +29,15 @@ This repository aims to grow the understanding of using Codex in applications by
 
 ## Requirements
 
-* [Python 3.7.1+](https://www.python.org/downloads/)
-  * \[Windows\]: Python is added to PATH.
+* [Python 3.7.1+](https://www.python.org/downloads/) in your PATH.
+  * OpenAI and PSUtil libraries (run: `python -m pip install -r requirements.txt`)
 * An [OpenAI account](https://openai.com/api/)
   * [OpenAI API Key](https://platform.openai.com/account/api-keys).
   * [OpenAI Organization Id](https://platform.openai.com/account/org-settings). If you have multiple organizations,
     please update your [default organization](https://beta.openai.com/account/api-keys) to the one that has access to
     codex models before getting the organization Id.
   * [OpenAI Model Id](https://platform.openai.com/docs/models). It provides access to a model. For
-    example, `gpt-3.5-turbo` or `gpt-4`.
+    example, `gpt-3.5-turbo` (default) or `gpt-4`.
 
 ## Installation
 
@@ -60,9 +61,9 @@ tzutil /s "Mountain Standard Time"
 tzutil /s "Pacific Standard Time"
 ```
 
-The tool creates a `current_context.txt` file that keeps track of past interactions, and passes them to the model on each subsequent command. 
+The tool creates a `current_context.txt` file that keeps track of past interactions, and passes them to the model on each subsequent command.
 
-When multi-turn mode is off, this tool will not keep track of interaction history. There are tradeoffs to using multi-turn mode - though it enables compelling context resolution, it also increases overhead. If, for example, the model produces the wrong script for the job, the user will want to remove that from the context, otherwise future conversation turns will be more likely to produce the wrong script again. With multi-turn mode off, the model will behave completely deterministically - the same command will always produce the same output. 
+When multi-turn mode is off, this tool will not keep track of interaction history. There are tradeoffs to using multi-turn mode - though it enables compelling context resolution, it also increases overhead. If, for example, the model produces the wrong script for the job, the user will want to remove that from the context, otherwise future conversation turns will be more likely to produce the wrong script again. With multi-turn mode off, the model will behave completely deterministically - the same command will always produce the same output.
 
 Any time the model seems to output consistently incorrect commands, you can use the `# stop multi-turn` command to stop the model from remembering past interactions and load in your default context. Alternatively, the `# default context` command does the same while preserving the multi-turn mode as on.
 
@@ -168,4 +169,4 @@ following commands:
 ### Can I run the sample on Azure?
 
 The sample code can be currently be used with Codex on OpenAI’s API. In the coming months, the sample will be updated,
-so you can also use it with the [Azure OpenAI Service](https://aka.ms/azure-openai). 
+so you can also use it with the [Azure OpenAI Service](https://aka.ms/azure-openai).

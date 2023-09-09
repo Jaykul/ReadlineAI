@@ -145,10 +145,7 @@ if __name__ == '__main__':
                                                 stop="#")
         completion_all = response['choices'][0]['message']['content']
 
-        if completion_all == "":
-            print(response)
-        else:
-            print(completion_all)
+        print(completion_all)
 
         # append output to prompt context file
         if config['multi_turn'] == "on":

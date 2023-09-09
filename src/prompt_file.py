@@ -81,6 +81,7 @@ class PromptFile:
         """
 
         with open(self.file_path, 'a') as f:
+            f.write('\n\n')
             f.write(user_query)
             f.write(prompt_response)
 
