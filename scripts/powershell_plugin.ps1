@@ -6,14 +6,15 @@ function create_completion() {
     param (
         [Parameter (Mandatory = $true)] [string] $buffer
     )
-    
+
     if ($nl_cli_script -eq "" -or !(Test-Path($nl_cli_script))) {
         Write-Output "# Please update the nl_cli_script path in the profile!"
         return "`nnotepad $profile"
     }
+    write-progress -id 1 -activity "Codex query"
+    $output = echo -n $buffer | python $nl_cli_script
+    write-progress -id 1 -activity "Codex query" -completed
 
-    $output = echo -n $buffer | python $nl_cli_script 
-    
     return $output
 }
 
@@ -22,7 +23,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+g `
                          -LongDescription "Calls Codex CLI tool on the current buffer" `
                          -ScriptBlock {
     param($key, $arg)
-    
+
     $line = $null
     $cursor = $null
 
@@ -30,7 +31,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+g `
 
     # get response from create_completion function
     $output = create_completion($line)
-    
+
     # check if output is not null
     if ($output -ne $null) {
         foreach ($str in $output) {
