@@ -51,7 +51,7 @@ askSettings()
         echo -n 'OpenAI API key: '; read -s SECRET_KEY; echo
     fi
     if [ -z "$MODEL_ID" ]; then
-        echo -n 'OpenAI Model Id: '; read MODEL_ID
+        MODEL_ID=gpt-3.5-turbo
     fi
 }
 
@@ -65,7 +65,7 @@ validateSettings()
     if [ $STATUS_CODE -ne 200 ]; then
         echo "ERROR [$STATUS_CODE]"
         echo "Failed to access OpenAI API, result: $STATUS_CODE"
-        echo "Please check your OpenAI API key (https://beta.openai.com/account/api-keys)" 
+        echo "Please check your OpenAI API key (https://beta.openai.com/account/api-keys)"
         echo "and Organization ID (https://beta.openai.com/account/org-settings)."
         echo "*************"
         exitScript
@@ -85,7 +85,7 @@ validateSettings()
 
 # Store API key and other settings in `openaiapirc`
 configureApp()
-{ 
+{
     echo "*** Configuring application [$OPENAI_RC_FILE] ***"
     echo '[openai]' > $OPENAI_RC_FILE
     echo "organization_id=$ORG_ID" >> $OPENAI_RC_FILE

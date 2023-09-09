@@ -9,7 +9,7 @@
 #
 # For example:
 # ./zsh_setup.sh -o <YOUR_ORG_ID> -k <YOUR_API_KEY> -e <MODEL_ID>
-# 
+#
 set -e
 
 # Call OpenAI API with the given settings to verify everything is in order
@@ -22,7 +22,7 @@ validateSettings()
     if [ $STATUS_CODE -ne 200 ]; then
         echo "ERROR [$STATUS_CODE]"
         echo "Failed to access OpenAI API, result: $STATUS_CODE"
-        echo "Please check your OpenAI API key (https://beta.openai.com/account/api-keys)" 
+        echo "Please check your OpenAI API key (https://beta.openai.com/account/api-keys)"
         echo "and Organization ID (https://beta.openai.com/account/org-settings)."
         echo "*************"
 
@@ -97,7 +97,7 @@ fi
 if (( ${+o_modelId[2]} )); then
     modelId=${o_modelId[2]}
 else
-    echo -n 'OpenAI Model Id: '; read modelId
+    modelId='gpt-3.5-turbo'
 fi
 
 # Detect Codex CLI folder path
